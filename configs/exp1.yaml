@@ -1,0 +1,71 @@
+# Experiment 1: Univariate baseline
+# Input: Historical load only (Power (kW))
+# Models: Persistence, MLP, GRU, LSTM, KAN, LSTM-T-KAN, LSTM-MLP, TCN, NBEATS, Transformer, CatBoost, XGBoost
+# Horizons: 5, 10, 15, 20, 25, 30 days
+
+seed: 42
+data:
+  raw_data_dir: "data/raw"
+
+models:
+  model_types: ["Persistence", "MLP", "GRU", "LSTM", "KAN", "LSTM_T_KAN", "LSTM_MLP", "TCN", "NBEATS", "Transformer", "CatBoost", "XGBoost"]
+  MLP:
+    hidden_size1: 64
+    hidden_size2: 32
+    dropout: 0.2
+  GRU:
+    hidden_size: 32
+    num_layers: 2
+    dropout: 0.2
+  LSTM:
+    hidden_size: 32
+    num_layers: 2
+    dropout: 0.2
+  KAN:
+    grid_size: 5
+    spline_order: 3
+  LSTM_T_KAN:
+    hidden_size: 128
+    num_lstm_layers: 2
+    kan_layers: [128, 64, 32]
+    dropout: 0.2
+    bidirectional: false
+  LSTM_MLP:
+    hidden_size: 128
+    num_lstm_layers: 2
+    mlp_hidden1: 64
+    mlp_hidden2: 32
+    dropout: 0.2
+    bidirectional: false
+  TCN:
+    num_channels: [32, 64]
+    kernel_size: 3
+    dropout: 0.2
+  NBEATS:
+    num_blocks: 4
+    hidden_size: 64
+    dropout: 0.2
+  Transformer:
+    d_model: 64
+    nhead: 4
+    num_layers: 2
+    dim_feedforward: 64
+    dropout: 0.2
+  CatBoost:
+    iterations: 200
+    learning_rate: 0.1
+    depth: 4
+  XGBoost:
+    n_estimators: 200
+    learning_rate: 0.1
+    max_depth: 4
+
+training:
+  epochs: 100
+  batch_size: 64
+  window_size: 24
+  patience: 10
+  learning_rate: 0.001
+
+evaluation:
+  metrics: ["MAE", "RMSE", "R2", "MAPE", "wMAPE"]
