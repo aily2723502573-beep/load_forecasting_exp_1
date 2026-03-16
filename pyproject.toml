@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lstm-t-kan-load-forecasting"
+version = "0.1.0"
+description = "Multi-horizon Building Load Forecasting with LSTM-T-KAN (EXP 1 Univariate Baseline)"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy>=1.26",
+  "pandas>=2.2",
+  "pyyaml>=6.0",
+  "scikit-learn>=1.4",
+  "torch>=2.2",
+  "xgboost>=2.0",
+  "catboost>=1.2",
+  "joblib>=1.3",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["load_forecasting*"]
