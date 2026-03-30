@@ -1,15 +1,34 @@
-seed: 42
+# Experiment 2: Multivariate (multi-source features)
+# Input: Multi-source features (calendar, load statistics, time-frequency, lagged load)
+# Models: Persistence, MLP, GRU, LSTM, KAN, LSTM-T-KAN, LSTM-MLP, TCN, NBEATS, Transformer, CatBoost, XGBoost
+# Horizons: 1-30 days
 
+seed: 42
 data:
   raw_data_dir: "data/raw"
 
-models:
-  model_types:  ["Persistence", "MLP", "GRU", "LSTM", "KAN", "LSTM_T_KAN", "LSTM_MLP", "TCN", "NBEATS", "Transformer", "CatBoost", "XGBoost"]
+# Multi-source features
 input_features:
   office:
+    - Near_base_load
+    - Near_peak_load
+    - Approx_max
+    - High_load_duration
+    - Base_load_duration
+    - Hour
+    - Is_holiday
+    - P_max
+    - P_median
+    - P_min
+    - P_t_1
+    - P_t_2
+    - P_t_9
+    - Peak_to_Peak
+    - RMS
     - "Power (kW)" 
 
-  
+models:
+  model_types: ["Persistence", "MLP", "GRU", "LSTM", "KAN", "LSTM_T_KAN", "LSTM_MLP", "TCN", "NBEATS", "Transformer", "CatBoost", "XGBoost"]
   MLP:
     hidden_size1: 128
     hidden_size2: 64
@@ -70,6 +89,7 @@ input_features:
     num_layers: 2
     dim_feedforward: 128
     dropout: 0.2
+
 
   XGBoost:
     n_estimators: 500
